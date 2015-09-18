@@ -50,5 +50,3 @@ test:
 production:
   <<: *default
   database: demo-rspec_production
-  username: demo-rspec
-  password: <%= ENV['DEMO-RSPEC_DATABASE_PASSWORD'] %>
