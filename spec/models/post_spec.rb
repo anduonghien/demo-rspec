@@ -11,7 +11,7 @@ RSpec.describe Post, type: :model do
       it "is valid user and title" do
         # user = User.last
         # Create post
-        post = FactoryGirl.new(:post, user: @user)
+        post = FactoryGirl.build(:post, user: @user)
 
         expect(post).to be_valid
       end
@@ -21,7 +21,7 @@ RSpec.describe Post, type: :model do
       it "is invalid without title" do
         # user = User.last
 
-        post = FactoryGirl.new(:post, title: nil, user: @user)
+        post = FactoryGirl.build(:post, title: nil, user: @user)
 
         expect(post).to have(1).errors_on(:title)
       end
@@ -29,13 +29,13 @@ RSpec.describe Post, type: :model do
   end
 
   it "is invalid without user" do
-    post = FactoryGirl.new(:post, user: nil)
+    post = FactoryGirl.build(:post, user: nil)
 
     expect(post).to have(1).errors_on(:user)
   end
 
   it "is user create post not exits" do
-    post = FactoryGirl.new(:post, user: "1000x")
+    post = FactoryGirl.build(:post, user_id: "1000x")
 
     expect(post).to have(1).errors_on(:user)
   end

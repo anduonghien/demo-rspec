@@ -2,43 +2,43 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it "is valid first_name, last_name, email" do
-    user = FactoryGirl.new(:user)
+    user = FactoryGirl.build(:user)
     expect(user).to be_valid
   end
 
   # Defaul expect(user).to have(1).errors_on(:first_name) has been removed from Rspec 2.9
   # And now, Rspec 3.0, if you want use it, add gem rspec-collection_matchers to Gemfile
   it "is invalid without a first_name" do
-    user = FactoryGirl.new(:user, first_name: nil)
+    user = FactoryGirl.build(:user, first_name: nil)
     expect(user).to have(1).errors_on(:first_name)
   end
 
   it "is invalid without a last_name" do
-    user = FactoryGirl.new(:user, last_name: nil)
+    user = FactoryGirl.build(:user, last_name: nil)
     expect(user).to have(1).errors_on(:last_name)
   end
 
   it "is invalid without a email" do
-    user = FactoryGirl.new(:user, email: nil)
+    user = FactoryGirl.build(:user, email: nil)
     expect(user).to have(2).errors_on(:email)
   end
   
   it "is invalid email format" do
-    user = FactoryGirl.new(:user, email: "abc")
+    user = FactoryGirl.build(:user, email: "abc")
     expect(user).to have(1).errors_on(:email)
   end
 
   it "is invalid without a duplicate email" do
     FactoryGirl.create(:user, email: "duonghienan.dha@gmail.com")
-    user = FactoryGirl.create(:user, email: "duonghienan.dha@gmail.com")
+    user = FactoryGirl.build(:user, email: "duonghienan.dha@gmail.com")
 
     expect(user).to have(1).errors_on(:email)
   end
   
   it "return full_name as a string" do
     user = FactoryGirl.create(
-      :user, 
-      first_name: "first_name", 
+      :user,
+      first_name: "An",
       last_name: "Duong Hien"
     )
     expect(user.full_name).to eq 'An Duong Hien'
