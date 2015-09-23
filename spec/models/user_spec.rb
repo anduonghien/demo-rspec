@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       email: Faker::Internet.email
-    )
+      )
     expect(user).to be_valid
   end
 
@@ -37,13 +37,13 @@ RSpec.describe User, type: :model do
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       email: "duonghienan.dha@gmail.com" 
-    )
+      )
 
     user = User.new(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       email: "duonghienan.dha@gmail.com" 
-    )
+      )
 
     expect(user).to have(1).errors_on(:email)
   end
@@ -53,8 +53,43 @@ RSpec.describe User, type: :model do
       first_name: 'An',
       last_name: 'Duong Hien',
       email: Faker::Internet.email 
-    )
+      )
 
     expect(user.full_name).to eq 'An Duong Hien'
+  end
+
+  describe "User has_many Post" do
+    before :each do
+      @user = FactoryGirl.create(:user)
+    end
+
+    context "User not have post" do
+      it "user not have post" do
+        expect(@user.posts.count).to eq 0
+      end
+    end
+
+    context "User have post" do
+      before :each do
+        @post1 = FactoryGirl.create(:post, user: @user)
+      end
+      it "user have 1 post" do
+        expect(@user.posts.count).to eq 1
+      end
+
+      it "user have >1 posts" do
+        @post2 = FactoryGirl.create(:post, title: Faker::Lorem.sentence, content: Faker::Lorem.paragraph, user: @user)
+        expect(@user.posts.count).to be > 1
+      end
+
+      it "get first post eq with post1" do
+        expect(@user.posts.first.title).to eq @post1.title
+      end
+
+      it "get last post eq with post3" do
+        @post3 = FactoryGirl.create(:post, title: Faker::Lorem.sentence, content: Faker::Lorem.paragraph, user: @user)
+        expect(@user.posts.last.title).to eq @post3.title
+      end
+    end
   end
 end
