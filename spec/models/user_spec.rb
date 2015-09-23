@@ -36,7 +36,11 @@ RSpec.describe User, type: :model do
   end
   
   it "return full_name as a string" do
-    user = FactoryGirl.create(:user, first_name: "first_name", last_name: "Duong Hien")
+    user = FactoryGirl.create(
+      :user, 
+      first_name: "first_name", 
+      last_name: "Duong Hien"
+    )
     expect(user.full_name).to eq 'An Duong Hien'
   end
 
